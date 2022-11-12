@@ -9,7 +9,7 @@ import requests
 bot = telebot.TeleBot(bot_token)
 news = []
 
-def bd_users(user_id): # проверяес есть ли такое id пользователя, если нет добовляем
+def bd_users(user_id): # проверяем id, если нет добовляем
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = us.cursor()
 	answer = cursor.execute("""select id from users where id=?""", (user_id,)).fetchone()
@@ -60,6 +60,7 @@ def bd_new_category(user_id, cat):
 					WHERE users.id=? AND categories.name=?''', (user_id, cat)).fetchone()
 	us.close()
 	return res
+
 def bd_del_category(user_id, cat):
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = us.cursor()
@@ -67,6 +68,7 @@ def bd_del_category(user_id, cat):
 	(SELECT id FROM categories WHERE name=?)''', (user_id, cat))
 	us.commit()
 	us.close()
+	
 try:
 	connect = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = connect.cursor()
