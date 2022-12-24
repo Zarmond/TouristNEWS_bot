@@ -69,6 +69,8 @@ def bd_del_category(user_id, cat):
 	us.commit()
 	us.close()
 	
+# def bd_upd_category():
+
 try:
 	connect = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = connect.cursor()
@@ -113,7 +115,7 @@ def send_welcome(message):
 			bd_new_user(user_id)
 			bot.send_message(message.from_user.id, "Здравствуйте")
 		else:
-			bot.send_message(message.from_user.id, "Приятно видеть вас снова")
+			bot.send_message(message.from_user.id, "Приятно видеть Вас снова")
 	except sqlite3.Error as error:
 		bot.send_message(message.from_user.id, "error")
 
@@ -121,7 +123,7 @@ def send_welcome(message):
 def send_welcome(message):
 	bot.reply_to(message, "/new-новости")
 
-@bot.message_handler(commands=['categoty'])
+@bot.message_handler(commands=['category'])
 def send_welcome(message):#
 	markup = types.InlineKeyboardMarkup(row_width=1)
 	subscribe = types.InlineKeyboardButton("Подписаться на категорию новостей", callback_data='subscribe')
