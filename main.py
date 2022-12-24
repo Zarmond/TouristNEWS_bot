@@ -23,7 +23,7 @@ def bd_new_user(user_id):
 	us.commit()
 	us.close()
 
-def bd_watch(user_id): # проверяем есть ли подписки у пользователя
+def bd_watch(user_id): #наличие подписок
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cur = us.cursor()
 	res = cur.execute('''select name from categories
@@ -33,14 +33,14 @@ def bd_watch(user_id): # проверяем есть ли подписки у п
 	us.close()
 	return res
 
-def bd_subscribe(): # список имеющихся категорий в базе
+def bd_subscribe(): #категории
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = us.cursor()
 	res = cursor.execute('SELECT name FROM categories').fetchall()
 	us.close()
 	return res
 
-def bd_subscribe_category(user_id, cat): #одписка пользователя на катерогию
+def bd_subscribe_category(user_id, cat): #подписки
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = us.cursor()
 	cursor.execute('''INSERT INTO subscribes(id_user, id_category) 
@@ -60,7 +60,7 @@ def bd_new_category(user_id, cat):
 					WHERE users.id=? AND categories.name=?''', (user_id, cat)).fetchone()
 	us.close()
 	return res
-
+	
 def bd_del_category(user_id, cat):
 	us = sqlite3.connect('database.db', check_same_thread=False)
 	cursor = us.cursor()
@@ -122,7 +122,7 @@ def send_welcome(message):
 	bot.reply_to(message, "/new-новости")
 
 @bot.message_handler(commands=['categoty'])
-def send_welcome(message):
+def send_welcome(message):#
 	markup = types.InlineKeyboardMarkup(row_width=1)
 	subscribe = types.InlineKeyboardButton("Подписаться на категорию новостей", callback_data='subscribe')
 	unsubscribe = types.InlineKeyboardButton("Отписаться от категории новостей", callback_data='unsubscribe')
